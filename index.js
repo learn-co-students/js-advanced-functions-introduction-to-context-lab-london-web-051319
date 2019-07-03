@@ -59,36 +59,65 @@ const allWagesFor = (record) => {
    let wages = [];
    dates = record.timeInEvents.map(element => element = element.date);
    for(let date of dates) {
-      wagesEarnedOnDate(date).push(wages);
+      const value = wagesEarnedOnDate(record, date);
+      wages.push(value);
    };
-   let salary = wages.reduce(function(e, memo) {e+memo});
+   const salary = wages.reduce((e,memo) => e + memo);
    return salary;
-}
+};
 
-   let record = {
-      firstName: "Julius",
-      familyName: "Caesar",
-      title: "General",
-      payPerHour: 1000,
-      timeInEvents: [{
-         type: "TimeIn",
-         date: "44-03-15",
-         hour: parseInt("0900", 10)
-      },
-      {
-         type: "TimeIn",
-         date: "44-03-14",
-         hour: parseInt("0900", 10)
+const calculatePayroll = (array) => {
+   const wagesTotal = [];
+   if (array.length >= 1) {
+      for(const employee of array) {
+         wagesTotal.push(allWagesFor(employee))
       }
-   ],
-      timeOutEvents: [{
-         type: "TimeOut",
-         date: "44-03-15",
-         hour: parseInt("1100", 10)
-      },
-      {
-         type: "TimeOut",
-         date: "44-03-14",
-         hour: parseInt("2100", 10)
-      }]
-   };
+   } else {
+      wagesTotal.push(allWagesFor(array))
+   }
+   const total = wagesTotal.reduce((e,memo) => e + memo)
+   return total;
+};
+
+const createEmployeeRecords = (csv) => {
+   const records = [];
+   for(let data of csv) {
+      records.push(createEmployeeRecord(data));
+   }
+   return records;
+};
+
+const findEmployeebyFirstName = (array, employeeName) => {
+   return array.find(employee => employee.name = employeeName);
+};
+
+
+// delete after
+// let record = {
+//    firstName: "Julius",
+//    familyName: "Caesar",
+//    title: "General",
+//    payPerHour: 1000,
+//    timeInEvents: [{
+//       type: "TimeIn",
+//       date: "44-03-15",
+//       hour: parseInt("0900", 10)
+//    },
+//    {
+//       type: "TimeIn",
+//       date: "44-03-14",
+//       hour: parseInt("0900", 10)
+//    }
+// ],
+//    timeOutEvents: [{
+//       type: "TimeOut",
+//       date: "44-03-15",
+//       hour: parseInt("1100", 10)
+//    },
+//    {
+//       type: "TimeOut",
+//       date: "44-03-14",
+//       hour: parseInt("2100", 10)
+//    }]
+// };
+// delete after
